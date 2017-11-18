@@ -119,6 +119,7 @@ public class GetLibraryAsync extends AsyncTask<Void, Void, Void> {
                 Log.e("here", publishDate);
                 Log.e("here", ageGroupCode);
                 Log.e("here", languageCode);
+                Log.e("here", authorName);
             }
             LibraryAdapter libraryAdapter = new LibraryAdapter(context, storybooks);
             lvShowStorybook.setAdapter(libraryAdapter);
