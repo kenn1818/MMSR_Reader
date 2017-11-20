@@ -29,8 +29,9 @@ public class LibraryAdapter extends ArrayAdapter<String> {
         super(context, R.layout.activity_library_list_item);
         //    this.storybookTitle = storybookTitle;
         //    this.storybookDescription = storybookDescription;
-        this.libStorybooks = libStorybooks;
         this.mContext = context;
+        this.libStorybooks = libStorybooks;
+
     }
 
     @Override
