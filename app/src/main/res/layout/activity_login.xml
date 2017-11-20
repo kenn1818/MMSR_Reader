@@ -43,6 +43,16 @@
         android:ems="10"
         android:inputType="date" />
 
+    <Button
+        android:id="@+id/btn_signup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimaryDark"
+        android:onClick="proceedMainPage"
+        android:text="Confirm"
+        android:textColor="@android:color/white" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,14 +61,4 @@
         android:text="Copyright @ TGC Sdn Bhd"
         android:layout_marginTop="10dp"
         android:textColor="@android:color/white"/>
-
-    <Button
-        android:id="@+id/btn_signup"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:background="@color/colorPrimary"
-        android:onClick="proceedMainPage"
-        android:text="Confirm"
-        android:textColor="@android:color/white" />
 </LinearLayout>

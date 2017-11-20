@@ -21,18 +21,19 @@
     </android.support.design.widget.AppBarLayout>
 
     <ScrollView
-
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:fillViewport="true">
+
     <ListView
         android:id="@+id/lvShowStorybook"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp" />
+
     </ScrollView>
 </LinearLayout>
