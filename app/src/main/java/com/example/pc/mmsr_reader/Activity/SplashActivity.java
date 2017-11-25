@@ -1,9 +1,10 @@
-package com.example.pc.mmsr_reader;
+package com.example.pc.mmsr_reader.Activity;
 
 import android.content.Intent;
 import android.view.WindowManager;
 
 import com.daimajia.androidanimations.library.Techniques;
+import com.example.pc.mmsr_reader.R;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
 import com.viksaa.sssplash.lib.model.ConfigSplash;
@@ -22,20 +23,21 @@ public class SplashActivity extends AwesomeSplash{
 
         //Background Animation
         configSplash.setBackgroundColor(R.color.bg_splash);
-        configSplash.setAnimCircularRevealDuration(3000);
+        configSplash.setAnimCircularRevealDuration(1000);
         configSplash.setRevealFlagX(Flags.REVEAL_LEFT);
         configSplash.setRevealFlagX(Flags.REVEAL_BOTTOM);
 
         //Logo
-        configSplash.setLogoSplash(R.drawable.storybook);
-        configSplash.setAnimLogoSplashDuration(5000);
-        configSplash.setAnimLogoSplashTechnique(Techniques.Bounce);
+        configSplash.setLogoSplash(R.mipmap.ic_mmsr_reader);
+
+        configSplash.setAnimLogoSplashDuration(1000);
+        configSplash.setAnimLogoSplashTechnique(Techniques.FadeIn);
 
         //Title
         configSplash.setTitleSplash("MMSR Reader");
         configSplash.setTitleTextColor(R.color.colorAccent);
         configSplash.setTitleTextSize(30f);
-        configSplash.setAnimTitleDuration(3000);
+        configSplash.setAnimTitleDuration(2000);
         configSplash.setAnimTitleTechnique(Techniques.FlipInX);
     }
 

@@ -1,4 +1,4 @@
-package com.example.pc.mmsr_reader;
+package com.example.pc.mmsr_reader.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,6 +14,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.pc.mmsr_reader.Class.Storybook;
+import com.example.pc.mmsr_reader.R;
 
 import java.util.ArrayList;
 

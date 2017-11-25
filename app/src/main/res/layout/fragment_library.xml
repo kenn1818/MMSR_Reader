@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#E0E0E0"
     android:padding="8dp"
-    tools:context="com.example.pc.mmsr_reader.LibraryFragment">
+    tools:context="com.example.pc.mmsr_reader.Fragment.LibraryFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView

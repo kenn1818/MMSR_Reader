@@ -1,4 +1,4 @@
-package com.example.pc.mmsr_reader;
+package com.example.pc.mmsr_reader.Activity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -10,12 +10,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.pc.mmsr_reader.Fragment.AboutUsFragment;
+import com.example.pc.mmsr_reader.Fragment.LibraryFragment;
+import com.example.pc.mmsr_reader.Fragment.PrivacyStatementFragment;
+import com.example.pc.mmsr_reader.Fragment.ProfileFragment;
+import com.example.pc.mmsr_reader.PermissionVerify;
+import com.example.pc.mmsr_reader.R;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        PermissionVerify.verifyStoragePermissions(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -57,8 +65,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_privacy_statement) {
+            PrivacyStatementFragment privacyStatementFragment = new PrivacyStatementFragment();
+            android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.layout_for_fragment, privacyStatementFragment).commit();
         }
 
         return super.onOptionsItemSelected(item);

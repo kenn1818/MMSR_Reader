@@ -21,42 +21,43 @@
             android:padding="1dp" />
         </FrameLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtStoryTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
-                android:text="Title: "
-                android:textStyle="bold"
-                android:textSize="20sp" />
+        <TextView
+            android:id="@+id/txtStoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:text="Title: "
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txtStoryAuthor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
-                android:text="Author: "
-                android:textStyle="italic"
-                android:textSize="15sp" />
+        <TextView
+            android:id="@+id/txtStoryAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:text="Author: "
+            android:textSize="15sp"
+            android:textStyle="italic" />
 
-            <TextView
-                android:id="@+id/txtDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
-                android:text="@string/story_description"
-                android:textStyle="italic"
-                android:textSize="15sp" />
+        <TextView
+            android:id="@+id/txtDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:text="@string/story_description"
+            android:textSize="15sp"
+            android:textStyle="italic" />
 
-            <RatingBar
-                android:id="@+id/ratingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:isIndicator="false"/>
-        </LinearLayout>
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            style="@style/customRatingBar"/>
+    </LinearLayout>
 </LinearLayout>

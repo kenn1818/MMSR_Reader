@@ -15,4 +15,7 @@
     <string name="about_us">About Us</string>
     <string name="logout">Logout</string>
     <string name="story_description">Story Description:</string>
+    <string name="mmsr_reader">MMSR Reader</string>
+    <string name="privacy_statement">Privacy Statement</string>
+
 </resources>
