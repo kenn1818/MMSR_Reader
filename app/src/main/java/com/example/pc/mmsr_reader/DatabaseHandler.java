@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.pc.mmsr_reader.Class.Page;
+import com.example.pc.mmsr_reader.Class.Reader;
 import com.example.pc.mmsr_reader.Class.Storybook;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Tables name
     private static final String STORYBOOK_TABLE = "storybook";
     private static final String PAGE_TABLE = "page";
+    private static final String READER_TABLE = "reader";
 
     // StorybookLibrary Table Columns names
     private static final String STORYBOOK_STORYBOOKID = "storybookID";
@@ -44,6 +46,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String PAGE_MEDIA = "Media";
     private static final String PAGE_CONTENT = "content";
     private static final String PAGE_WORDCOUNT = "WordCount";
+    // Reader Table Columns names
+    private static final String READER_NAME = "userName";
+    private static final String READER_EMAIL = "email";
+    private static final String READER_DOB = "userDOB";
+    private static final String READER_POINTS = "points";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -109,6 +116,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
 
 
+    }
+
+    boolean addReaderProfile(Reader reader) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(READER_NAME, reader.getUserName());
+        values.put(READER_EMAIL, reader.getEmail());
+        values.put(READER_DOB, reader.getUserDOB());
+        values.put(READER_POINTS, reader.getPoints());
+        // Inserting Row
+        long result = db.insert(READER_TABLE, null, values);
+        // db.close(); // Closing database connection
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void deleteExistingRecordInReaderTable() {
+        String query = "DELETE FROM READER";
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, null);
+        cursor.moveToFirst();
     }
 
     boolean addPage(Page page) {

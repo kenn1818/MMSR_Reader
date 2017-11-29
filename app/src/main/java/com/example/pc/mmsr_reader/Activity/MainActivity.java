@@ -1,5 +1,6 @@
 package com.example.pc.mmsr_reader.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +24,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intent = new Intent(this, SplashActivity.class);
+        startActivity(intent);
+
         PermissionVerify.verifyStoragePermissions(this);
 
         super.onCreate(savedInstanceState);
@@ -69,6 +73,8 @@ public class MainActivity extends AppCompatActivity
             PrivacyStatementFragment privacyStatementFragment = new PrivacyStatementFragment();
             android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.layout_for_fragment, privacyStatementFragment).commit();
+        }else if(id == R.id.action_update){
+            //TODO put the update library code
         }
 
         return super.onOptionsItemSelected(item);

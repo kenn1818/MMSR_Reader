@@ -52,12 +52,18 @@
         android:text="Confirm"
         android:textColor="@android:color/white" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btnGoogleSignIn"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textSize="15sp"
-        android:text="Copyright @ TGC Sdn Bhd"
-        android:layout_marginTop="10dp"
-        android:textColor="@android:color/white"/>
+        android:textSize="15dp"/>
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:textSize="15sp"-->
+        <!--android:text="Copyright @ TGC Sdn Bhd"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:textColor="@android:color/white"/>-->
 </LinearLayout>

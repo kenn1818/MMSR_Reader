@@ -21,6 +21,7 @@ public class Storybook {
     public byte[]  coverPage;
     public int totalWords;
     public int totalPages;
+    public String rate;
 
 
     private ArrayList<Page> page = new ArrayList<Page>();
@@ -37,7 +38,7 @@ public class Storybook {
     public void setCoverPage(byte[]  coverPage) {
         this.coverPage = coverPage;
     }
-    public Storybook(String storybookID, String title, String desc, String language, String ageGroup, String dateOfCreation, String email, byte[] coverPage) {
+    public Storybook(String storybookID, String title, String desc, String language, String ageGroup, String dateOfCreation, String email, byte[] coverPage, String rate) {
         this.storybookID = storybookID;
         this.title = title;
         this.desc = desc;
@@ -46,9 +47,10 @@ public class Storybook {
         this.email = email;
         this.dateOfCreation = dateOfCreation;
         this.coverPage = coverPage;
+        this.rate = rate;
     }
 
-    public Storybook(String storybookID, String title, String desc, String language, String status, String ageGroup, String dateOfCreation, String type, String email, byte[]  coverPage) {
+    public Storybook(String storybookID, String title, String desc, String language, String status, String ageGroup, String dateOfCreation, String type, String email, byte[]  coverPage, String rate) {
         this.storybookID = storybookID;
         this.title = title;
         this.desc = desc;
@@ -59,6 +61,7 @@ public class Storybook {
         this.type = type;
         this.email = email;
         this.coverPage = coverPage;
+        this.rate = rate;
     }
 
     public String getStorybookID() {
@@ -147,6 +150,14 @@ public class Storybook {
 
     public void setTotalPages(int totalPages) {
         this.totalPages = totalPages;
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRating(String rate) {
+        this.rate = rate;
     }
 
     public void addPage() {

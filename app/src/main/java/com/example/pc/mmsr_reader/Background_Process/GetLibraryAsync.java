@@ -111,9 +111,10 @@ public class GetLibraryAsync extends AsyncTask<Void, Void, Void> {
                 String ageGroupCode = storyObject.getString("ageGroupCode");
                 String coverPage = storyObject.getString("coverPage");
                 String languageCode = storyObject.getString("languageCode");
-                String authorName = storyObject.getString("email");
+                String authorName = storyObject.getString("name");
+                String rate = storyObject.getString("rating");
                 byte[] img = Base64.decode(coverPage.getBytes(), Base64.DEFAULT);
-                Storybook storybook = new Storybook(storybookID, title, description, languageCode, ageGroupCode, publishDate, authorName, img);
+                Storybook storybook = new Storybook(storybookID, title, description, languageCode, ageGroupCode, publishDate, authorName, img, rate);
                 storybooks.add(storybook);
                 Log.e("here", storybookID);
                 Log.e("here", title);
@@ -122,13 +123,27 @@ public class GetLibraryAsync extends AsyncTask<Void, Void, Void> {
                 Log.e("here", ageGroupCode);
                 Log.e("here", languageCode);
                 Log.e("here", authorName);
+                Log.e("here", rate);
             }
             LibraryAdapter libraryAdapter = new LibraryAdapter(context, storybooks);
             lvShowStorybook.setAdapter(libraryAdapter);
+
+
+            updateLocalDB();
             //mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
             //mRecyclerView.setAdapter(libraryAdapter);
         } catch (JSONException e) {
             Log.e("error", e.getMessage().toString());
+        }
+    }
+
+    private void updateLocalDB() {
+        //TODO: insert storybooks to local DB
+        if(storybooks.size() > 0){
+            for (Storybook s : storybooks
+                 ) {
+                //Insert Stroybook to DB
+            }
         }
     }
 }

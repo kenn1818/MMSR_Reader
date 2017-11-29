@@ -28,7 +28,7 @@ public class SplashActivity extends AwesomeSplash{
         configSplash.setRevealFlagX(Flags.REVEAL_BOTTOM);
 
         //Logo
-        configSplash.setLogoSplash(R.mipmap.ic_mmsr_reader);
+        configSplash.setLogoSplash(R.drawable.splash_screen);
 
         configSplash.setAnimLogoSplashDuration(1000);
         configSplash.setAnimLogoSplashTechnique(Techniques.FadeIn);
@@ -43,6 +43,7 @@ public class SplashActivity extends AwesomeSplash{
 
     @Override
     public void animationsFinished() {
-        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        finish();
+        //startActivity(new Intent(SplashActivity.this, MainActivity.class));
     }
 }

@@ -51,6 +51,7 @@ public class LibraryAdapter extends ArrayAdapter<String> {
             mViewHolder.mStorybookTitle = convertView.findViewById(R.id.txtStoryTitle);
             mViewHolder.mAuthorName = convertView.findViewById(R.id.txtStoryAuthor);
             mViewHolder.mStoryDesc = convertView.findViewById(R.id.txtDesc);
+            mViewHolder.mRating = convertView.findViewById(R.id.ratingBar);
             convertView.setTag(mViewHolder);
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
@@ -62,6 +63,8 @@ public class LibraryAdapter extends ArrayAdapter<String> {
         mViewHolder.mStorybookTitle.setText(current.getTitle());
         mViewHolder.mAuthorName.setText(current.getEmail());
         mViewHolder.mStoryDesc.setText(current.getDesc());
+        //How to set rating???!!!!
+        mViewHolder.mRating.setRating(Float.parseFloat(current.getRate()));
         //  mViewHolder.mStorybookDescription.setText(storybookDescription[position]);
         // return super.getView(position, convertView, parent);
         return convertView;
