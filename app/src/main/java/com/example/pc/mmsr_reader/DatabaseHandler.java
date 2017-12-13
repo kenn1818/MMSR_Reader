@@ -46,6 +46,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String PAGE_MEDIA = "Media";
     private static final String PAGE_CONTENT = "content";
     private static final String PAGE_WORDCOUNT = "WordCount";
+
     // Reader Table Columns names
     private static final String READER_NAME = "userName";
     private static final String READER_EMAIL = "email";
@@ -81,6 +82,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + PAGE_CONTENT + " TEXT,"
                 + PAGE_WORDCOUNT + " INTEGER" + ")";
         db.execSQL(CREATE_PAGE_TABLE);
+
+        String CREATE_READER_TABLE = "CREATE TABLE " + READER_TABLE + "("
+                + READER_NAME + " TEXT,"
+                + READER_EMAIL + " TEXT,"
+                + READER_DOB + " TEXT,"
+                + READER_POINTS + " TEXT" + ")";
+        db.execSQL(CREATE_READER_TABLE);
 
     }
 
@@ -133,6 +141,29 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         } else {
             return true;
         }
+    }
+
+    public Reader getReaderProfile() {
+        Reader reader = new Reader();
+        SQLiteDatabase database = this.getReadableDatabase();
+        String[] allColumn = {
+                READER_NAME,
+                READER_EMAIL,
+                READER_DOB,
+                READER_POINTS
+        };
+        Cursor cursor = database.query(READER_TABLE, allColumn, null, null, null, null, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            reader.setUserName(cursor.getString(0));
+            reader.setEmail(cursor.getString(1));
+            reader.setUserDOB(cursor.getString(2));
+            reader.setPoints(cursor.getInt(3));
+            cursor.moveToNext();
+        }
+        return reader;
     }
 
     public void deleteExistingRecordInReaderTable() {

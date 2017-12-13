@@ -67,7 +67,7 @@ public class createAccountVerificationGoogle extends AsyncTask<Void, Void, Void>
 
     private void VerifyIDPassword() {
         RequestQueue queue = Volley.newRequestQueue(context);
-        String storybookUrl = "http://tarucmmsr.pe.hu/insert_user.php";
+        String storybookUrl = "http://tarucmmsr.pe.hu/insert_reader.php";
         try {
             StringRequest postRequest = new StringRequest(
                     Request.Method.POST,

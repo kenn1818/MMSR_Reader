@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "62011906644",
+    "project_id": "mmsrreader"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62011906644:android:e77c96e2af0baf43",
+        "android_client_info": {
+          "package_name": "com.example.pc.mmsr_reader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "62011906644-tsa5prqptg4fspo45388jjcmlhb2iv8n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pc.mmsr_reader",
+            "certificate_hash": "835344a551989ad0c00d6a30b97b05b8ec58dfcc"
+          }
+        },
+        {
+          "client_id": "62011906644-8gn6e224pl17lo07h8l4std30b08frk4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJn4_T0qu1JaIZ0oyQ16CS7tDAcOMJYww"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

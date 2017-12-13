@@ -6,7 +6,6 @@
     android:padding="8dp"
     tools:context="com.example.pc.mmsr_reader.Fragment.LibraryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <ScrollView
 
         android:layout_width="fill_parent"

@@ -24,8 +24,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent intent = new Intent(this, SplashActivity.class);
+       Intent intent = new Intent(this, SplashActivity.class);
         startActivity(intent);
+ //       Intent intent = new Intent(this, LoginActivity.class);
+ //       startActivity(intent);
 
         PermissionVerify.verifyStoragePermissions(this);
 

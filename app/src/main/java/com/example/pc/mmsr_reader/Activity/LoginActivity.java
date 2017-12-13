@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient googleAPiClient;
     private static final int REQ_CODE = 9001;
     private SignInButton googleSignIn;
+
     //private EditText etLoginID, etLoginPassword;
     //private TextView tvLoginID, tvPassword, tv1, tvHere, tv2;
     //private Button btnSignIn;
@@ -88,6 +89,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             savePersonalData("google");
         } else {
             Toast.makeText(this, "Login failed,try another method", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_CODE) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleResult(result);
         }
     }
 }

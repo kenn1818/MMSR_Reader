@@ -22,40 +22,42 @@
         android:src="@mipmap/ic_mmsr_reader"/>
 
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:background="@drawable/edittext_login_form"
-        android:hint="Name"/>
+    <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="32dp"-->
+        <!--android:layout_marginRight="32dp"-->
+        <!--android:background="@drawable/edittext_login_form"-->
+        <!--android:hint="Name"/>-->
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/edittext_login_form"
-        android:hint="Date Of Birth"
-        android:ems="10"
-        android:inputType="date" />
+    <!--<EditText-->
+        <!--android:id="@+id/editText"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="32dp"-->
+        <!--android:layout_marginRight="32dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:background="@drawable/edittext_login_form"-->
+        <!--android:hint="Date Of Birth"-->
+        <!--android:ems="10"-->
+        <!--android:inputType="date" />-->
 
-    <Button
-        android:id="@+id/btn_signup"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorPrimaryDark"
-        android:onClick="proceedMainPage"
-        android:text="Confirm"
-        android:textColor="@android:color/white" />
+    <!--<Button-->
+        <!--android:id="@+id/btn_signup"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:background="@color/colorPrimaryDark"-->
+        <!--android:onClick="proceedMainPage"-->
+        <!--android:text="Confirm"-->
+        <!--android:textColor="@android:color/white" />-->
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btnGoogleSignIn"
-        android:layout_width="fill_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
         android:textSize="15dp"/>
 
     <!--<TextView-->

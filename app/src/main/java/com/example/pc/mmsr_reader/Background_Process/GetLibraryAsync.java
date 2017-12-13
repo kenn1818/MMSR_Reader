@@ -1,10 +1,16 @@
 package com.example.pc.mmsr_reader.Background_Process;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
@@ -14,6 +20,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.pc.mmsr_reader.Class.Storybook;
 import com.example.pc.mmsr_reader.Adapter.LibraryAdapter;
+import com.example.pc.mmsr_reader.Database.StoryContract;
+import com.example.pc.mmsr_reader.LibraryPopupWindow;
 import com.example.pc.mmsr_reader.VolleySingleton;
 
 import org.json.JSONArray;
@@ -21,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by pc on 11/6/2017.
@@ -128,6 +137,20 @@ public class GetLibraryAsync extends AsyncTask<Void, Void, Void> {
             LibraryAdapter libraryAdapter = new LibraryAdapter(context, storybooks);
             lvShowStorybook.setAdapter(libraryAdapter);
 
+            lvShowStorybook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intent = new Intent(context, LibraryPopupWindow.class);
+                    intent.putExtra("STORYBOOKID", storybooks.get(i).getStorybookID());
+                    intent.putExtra("TITLE", storybooks.get(i).getTitle());
+                    intent.putExtra("LANGUAGECODE", storybooks.get(i).getLanguage());
+                    intent.putExtra("DESCRIPTION", storybooks.get(i).getDesc());
+                    intent.putExtra("PUBLISHDATE", storybooks.get(i).getDateOfCreation());
+                    intent.putExtra("AGEGROUPCODE", storybooks.get(i).getAgeGroup());
+                    context.startActivity(intent);
+                }
+            });
+
 
             updateLocalDB();
             //mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
@@ -137,7 +160,7 @@ public class GetLibraryAsync extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    private void updateLocalDB() {
+    private void updateLocalDB(){
         //TODO: insert storybooks to local DB
         if(storybooks.size() > 0){
             for (Storybook s : storybooks
@@ -146,4 +169,5 @@ public class GetLibraryAsync extends AsyncTask<Void, Void, Void> {
             }
         }
     }
+
 }
