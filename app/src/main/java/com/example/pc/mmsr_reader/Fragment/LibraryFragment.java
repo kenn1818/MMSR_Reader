@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.example.pc.mmsr_reader.Class.Storybook;
 import com.example.pc.mmsr_reader.Background_Process.GetLibraryAsync;
 import com.example.pc.mmsr_reader.Adapter.LibraryAdapter;
+import com.example.pc.mmsr_reader.DatabaseHandler;
 import com.example.pc.mmsr_reader.R;
 
 import java.util.ArrayList;
@@ -36,10 +37,6 @@ public class LibraryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ageGroupFilter.add("toddler");
-        ageGroupFilter.add("kindergartener");
-        ageGroupFilter.add("preschooler");
-        ageGroupFilter.add("youngAdult");
 
         View rootView = inflater.inflate(R.layout.fragment_library, container, false);
         lvShowStorybook = rootView.findViewById(R.id.lvShowStorybook);
@@ -47,9 +44,16 @@ public class LibraryFragment extends Fragment {
         //mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
 
         //MainActivity mainActivity = (MainActivity) getActivity();
+        DatabaseHandler mydb = new DatabaseHandler(getContext());
+        storybooks = mydb.getAllStorybook();
 
-        GetLibraryAsync getLibraryAsync = new GetLibraryAsync(this.getContext(), lvShowStorybook, ageGroupFilter);
-        getLibraryAsync.execute();
+        //If local have no records, proceed to server in order retreive storybooks
+        //TODO check storybook size record in server
+        int serverStoryCount =0;
+        if(storybooks.size()<serverStoryCount){
+            GetLibraryAsync getLibraryAsync = new GetLibraryAsync(this.getContext(), lvShowStorybook, ageGroupFilter);
+            getLibraryAsync.execute();
+        }
 
         LibraryAdapter libraryAdapter = new LibraryAdapter(this.getContext(),storybooks);
         lvShowStorybook.setAdapter(libraryAdapter);

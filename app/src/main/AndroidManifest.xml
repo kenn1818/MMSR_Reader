@@ -21,6 +21,9 @@
         <activity android:name=".Activity.LoginActivity">
 
         </activity>
+        <activity android:name=".LibraryPopupWindowActivity">
+
+        </activity>
 
         <activity
             android:name=".Activity.MainActivity"

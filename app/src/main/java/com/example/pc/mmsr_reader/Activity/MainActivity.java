@@ -10,7 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.pc.mmsr_reader.Background_Process.GetLibraryAsync;
+import com.example.pc.mmsr_reader.DatabaseHandler;
 import com.example.pc.mmsr_reader.Fragment.AboutUsFragment;
 import com.example.pc.mmsr_reader.Fragment.LibraryFragment;
 import com.example.pc.mmsr_reader.Fragment.PrivacyStatementFragment;
@@ -77,6 +80,17 @@ public class MainActivity extends AppCompatActivity
             manager.beginTransaction().replace(R.id.layout_for_fragment, privacyStatementFragment).commit();
         }else if(id == R.id.action_update){
             //TODO put the update library code
+//            GetLibraryAsync getLibraryAsync = new GetLibraryAsync(this, lvShowStorybook, ageGroupFilter);
+//
+//            getLibraryAsync.execute();
+            long counter =0;
+            DatabaseHandler mydb = new DatabaseHandler(getApplicationContext());
+            counter = mydb.countExistingRecordInStorybookTable();
+            if(counter>0){
+                Toast.makeText(getApplicationContext(),"Number of Storybooks" + counter, Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getApplicationContext(),"No Storybooks Available", Toast.LENGTH_SHORT).show();
+            }
         }
 
         return super.onOptionsItemSelected(item);

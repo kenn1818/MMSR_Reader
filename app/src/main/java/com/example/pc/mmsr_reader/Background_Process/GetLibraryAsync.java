@@ -1,17 +1,15 @@
 package com.example.pc.mmsr_reader.Background_Process;
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,8 +18,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.pc.mmsr_reader.Class.Storybook;
 import com.example.pc.mmsr_reader.Adapter.LibraryAdapter;
-import com.example.pc.mmsr_reader.Database.StoryContract;
-import com.example.pc.mmsr_reader.LibraryPopupWindow;
+import com.example.pc.mmsr_reader.DatabaseHandler;
+import com.example.pc.mmsr_reader.LibraryPopupWindowActivity;
 import com.example.pc.mmsr_reader.VolleySingleton;
 
 import org.json.JSONArray;
@@ -29,13 +27,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by pc on 11/6/2017.
  */
 
 public class GetLibraryAsync extends AsyncTask<Void, Void, Void> {
+    DatabaseHandler mydb;
     Context context;
     ProgressDialog progressDialog;
 
@@ -44,6 +42,7 @@ public class GetLibraryAsync extends AsyncTask<Void, Void, Void> {
 
     ArrayList<Storybook> storybooks;
     ListView lvShowStorybook;
+
     //RecyclerView mRecyclerView;
     //StaggeredGridLayoutManager mStaggeredGridLayoutManager;
 
@@ -83,7 +82,9 @@ public class GetLibraryAsync extends AsyncTask<Void, Void, Void> {
     private void getLibrary() {
         RequestQueue requestQueue = VolleySingleton.getInstance().getRequestQueue();
         storybooks = new ArrayList<>();
+        //TODO move this url and declare in strings.xml
         String getStoryUrl = "http://tarucmmsr.pe.hu/get_storybook_translate_list.php?";
+        mydb= new DatabaseHandler(context);
 
         JsonArrayRequest request = new JsonArrayRequest(getStoryUrl, new Response.Listener<JSONArray>() {
             @Override
@@ -140,7 +141,7 @@ public class GetLibraryAsync extends AsyncTask<Void, Void, Void> {
             lvShowStorybook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Intent intent = new Intent(context, LibraryPopupWindow.class);
+                    Intent intent = new Intent(context, LibraryPopupWindowActivity.class);
                     intent.putExtra("STORYBOOKID", storybooks.get(i).getStorybookID());
                     intent.putExtra("TITLE", storybooks.get(i).getTitle());
                     intent.putExtra("LANGUAGECODE", storybooks.get(i).getLanguage());
@@ -151,8 +152,17 @@ public class GetLibraryAsync extends AsyncTask<Void, Void, Void> {
                 }
             });
 
+            if(storybooks.size()>0){
+                //TODO in order update local DB, must clear the local DB storage
+                mydb.deleteExistingRecordInStorybookTable();
+                mydb.updateLocalDB(storybooks);
+            }else{
+                //Display no storybook
+                Toast.makeText(context,"No Storybooks",Toast.LENGTH_SHORT).show();
+            }
+            //final DatabaseHandler mydb = new DatabaseHandler(context);
 
-            updateLocalDB();
+
             //mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
             //mRecyclerView.setAdapter(libraryAdapter);
         } catch (JSONException e) {
@@ -160,14 +170,6 @@ public class GetLibraryAsync extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    private void updateLocalDB(){
-        //TODO: insert storybooks to local DB
-        if(storybooks.size() > 0){
-            for (Storybook s : storybooks
-                 ) {
-                //Insert Stroybook to DB
-            }
-        }
-    }
+
 
 }

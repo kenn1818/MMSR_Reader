@@ -5,6 +5,7 @@ package com.example.pc.mmsr_reader.Class;
  */
 
 public class Page {
+    public String storybookID;
     public String languageCode;
     public int pageNo;
     public byte[] Media;
@@ -24,6 +25,14 @@ public class Page {
         Media = media;
         this.content = content;
         WordCount = wordCount;
+    }
+
+    public String getStorybookID() {
+        return storybookID;
+    }
+
+    public void setStorybookID(String storybookID) {
+        this.storybookID = storybookID;
     }
 
     public String getLanguageCode() {
