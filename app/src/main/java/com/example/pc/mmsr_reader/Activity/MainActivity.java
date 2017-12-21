@@ -16,6 +16,7 @@ import com.example.pc.mmsr_reader.Background_Process.GetLibraryAsync;
 import com.example.pc.mmsr_reader.DatabaseHandler;
 import com.example.pc.mmsr_reader.Fragment.AboutUsFragment;
 import com.example.pc.mmsr_reader.Fragment.LibraryFragment;
+import com.example.pc.mmsr_reader.Fragment.MyStorybookFragment;
 import com.example.pc.mmsr_reader.Fragment.PrivacyStatementFragment;
 import com.example.pc.mmsr_reader.Fragment.ProfileFragment;
 import com.example.pc.mmsr_reader.PermissionVerify;
@@ -113,7 +114,9 @@ public class MainActivity extends AppCompatActivity
             android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.layout_for_fragment, libraryFragment).commit();
         } else if (id == R.id.nav_my_story_books) {
-
+            MyStorybookFragment myStorybookFragment = new MyStorybookFragment();
+            android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.layout_for_fragment, myStorybookFragment).commit();
         } else if (id == R.id.nav_logout) {
 
         }

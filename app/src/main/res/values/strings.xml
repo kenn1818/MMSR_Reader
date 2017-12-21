@@ -20,5 +20,8 @@
     <string name="get_story_url">http://tarucmmsr.pe.hu/get_storybook_translate_list.php</string>
     <string name="speak">speak</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

@@ -1,7 +1,9 @@
 package com.example.pc.mmsr_reader;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +40,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -67,6 +72,7 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
     public String email;
     public String agegroupcode;
     public String lastBookNum;
+
     DatabaseHandler myDb;
     List<String> list;
     public String getSelectedStorybookPagesUrl;
@@ -81,7 +87,10 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
     private final int CHECK_CODE = 0x1;
     private TextToSpeech tts;
     private UtteranceProgressListener utteranceProgressListener;
+
     private Button buttonSpeak;
+    private Button buttonDownload;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +151,8 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
             }
         });
 
+        buttonDownload = findViewById(R.id.btnDownload);
+
         buttonSpeak = findViewById(R.id.buttonSpeak);
         buttonSpeak.setOnClickListener(new View.OnClickListener(){
 
@@ -162,6 +173,8 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
                         for (String word:stringInput.split(" ")) {
+                            tts.setLanguage(new Locale(selectedLanguage));
+
                             tts.speak(word, TextToSpeech.QUEUE_ADD, null, word);
                         }
 
@@ -400,7 +413,11 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
         if(i == TextToSpeech.SUCCESS){
             // Change this to match your
             // locale
-            tts.setLanguage(Locale.US);
+            for (String word:languageCode.split(" ")) {
+                tts.setLanguage(new Locale(word));
+
+            }
+
             utteranceProgressListener = new UtteranceProgressListener() {
                 @Override
                 public void onStart(final String utteranceId) {
@@ -430,5 +447,51 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
         }else{
             Log.e("TTS", "Initialization Failed!");
         }
+    }
+
+    public void Download(View v) {
+                    try {
+                        Calendar c = Calendar.getInstance();
+                        // System.out.println("Current time =&gt; " + c.getTime());
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String formattedDate = df.format(c.getTime());
+
+                        storybook.setStorybookID(storybookID);
+                        storybook.setTitle(title);
+                        storybook.setDesc(description);
+                        storybook.setType("Reading");;
+                        storybook.setReadability("null");
+                        storybook.setDateOfCreation(formattedDate);
+                        storybook.setAgeGroup(agegroupcode);
+                        storybook.setEmail(email);
+                        storybook.setCoverPage(storybook.getPage(0).getMedia());
+                        storybook.setStatus("for reading only");
+                        myDb.addStorybook(storybook);
+                        for (int i = 0; i < storytotalpagecount; i++) {
+                            Page pagewritten = new Page();
+                            pagewritten.setLanguageCode(storybookPage.get(i).getLanguageCode());
+                            pagewritten.setPageNo(storybookPage.get(i).getPageNo());
+                            pagewritten.setMedia(storybookPage.get(i).getMedia());
+                            pagewritten.setWordCount(storybookPage.get(i).getWordCount());
+                            pagewritten.setContent(storybookPage.get(i).getContent());
+                            storybookPage.get(i).setStorybookID(myDb.getLastStorybookID() + "");
+                            lastBookNum = storybookPage.get(i).getStorybookID();
+                            pagewritten.setStorybookID(storybookPage.get(i).getStorybookID());
+                            myDb.addPage(pagewritten);
+                        }
+
+                        Toast.makeText(LibraryPopupWindowActivity.this, "Add to My Storybooks successfully!", Toast.LENGTH_LONG).show();
+                        try {
+                            finish();
+                        } catch (Exception e) {
+                            Log.e("LibraryPopupWindow", e.toString());
+
+                        }
+                    } catch (NullPointerException e) {
+                        Toast.makeText(LibraryPopupWindowActivity.this, "nothing happen", Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Log.e("LibraryPopupWindow", e.toString());
+                    }
+
     }
 }

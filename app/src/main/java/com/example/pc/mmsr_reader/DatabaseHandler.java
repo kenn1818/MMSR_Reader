@@ -165,6 +165,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
+    public int getLastStorybookID() {
+        String query = "SELECT seq from sqlite_sequence where name = 'storybook'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        int laststorybookID = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                laststorybookID = Integer.parseInt(cursor.getString(cursor.getColumnIndex("seq")));
+                // Log.e("heree", laststorybookID + "");
+            } while (cursor.moveToNext());
+        }
+        // cursor.close();
+        return laststorybookID;
+
+    }
+
     public Reader getReaderProfile() {
         Reader reader = new Reader();
         SQLiteDatabase database = this.getReadableDatabase();

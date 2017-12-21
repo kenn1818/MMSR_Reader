@@ -147,14 +147,14 @@
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-
+            android:onClick="Download"
             android:text="Download"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etContent"
             app:layout_constraintVertical_bias="0.0" />
-        <!--android:onClick="Translate"-->
+
 
         <Spinner
             android:id="@+id/spnLanguageCode"
