@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//       Intent intent = new Intent(this, SplashActivity.class);
-//        startActivity(intent);
+       Intent intent = new Intent(this, SplashActivity.class);
+        startActivity(intent);
 
  //       Intent intent = new Intent(this, LoginActivity.class);
  //       startActivity(intent);
@@ -80,17 +80,18 @@ public class MainActivity extends AppCompatActivity
             PrivacyStatementFragment privacyStatementFragment = new PrivacyStatementFragment();
             android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.layout_for_fragment, privacyStatementFragment).commit();
-        }else if(id == R.id.action_update){
-            //TODO put the update library code
-            long counter =0;
-            DatabaseHandler mydb = new DatabaseHandler(getApplicationContext());
-            counter = mydb.countExistingRecordInStorybookTable();
-            if(counter>0){
-                Toast.makeText(getApplicationContext(),"Number of Storybooks" + counter, Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(getApplicationContext(),"No Storybooks Available", Toast.LENGTH_SHORT).show();
-            }
         }
+//        else if(id == R.id.action_update){
+//            //TODO put the update library code
+//            long counter =0;
+//            DatabaseHandler mydb = new DatabaseHandler(getApplicationContext());
+//            counter = mydb.countExistingRecordInStorybookTable();
+//            if(counter>0){
+//                Toast.makeText(getApplicationContext(),"Number of Storybooks" + counter, Toast.LENGTH_SHORT).show();
+//            }else{
+//                Toast.makeText(getApplicationContext(),"No Storybooks Available", Toast.LENGTH_SHORT).show();
+//            }
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -101,11 +102,12 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_activity_profile){
-            ProfileFragment profileFragment = new ProfileFragment();
-            android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.layout_for_fragment, profileFragment).commit();
-        }else if (id == R.id.nav_about_us) {
+//        if (id == R.id.nav_activity_profile){
+//            ProfileFragment profileFragment = new ProfileFragment();
+//            android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+//            manager.beginTransaction().replace(R.id.layout_for_fragment, profileFragment).commit();
+//        }else
+            if (id == R.id.nav_about_us) {
             AboutUsFragment aboutUsFragment = new AboutUsFragment();
             android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.layout_for_fragment, aboutUsFragment).commit();
@@ -113,13 +115,14 @@ public class MainActivity extends AppCompatActivity
             LibraryFragment libraryFragment = new LibraryFragment();
             android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.layout_for_fragment, libraryFragment).commit();
-        } else if (id == R.id.nav_my_story_books) {
-            MyStorybookFragment myStorybookFragment = new MyStorybookFragment();
-            android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.layout_for_fragment, myStorybookFragment).commit();
-        } else if (id == R.id.nav_logout) {
-
         }
+//        else if (id == R.id.nav_my_story_books) {
+//            MyStorybookFragment myStorybookFragment = new MyStorybookFragment();
+//            android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+//            manager.beginTransaction().replace(R.id.layout_for_fragment, myStorybookFragment).commit();
+//        } else if (id == R.id.nav_logout) {
+//
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

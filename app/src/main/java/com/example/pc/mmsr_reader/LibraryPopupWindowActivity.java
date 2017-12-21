@@ -415,8 +415,11 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
             // Change this to match your
             // locale
             for (String word : languageCode.split(" ")) {
-                tts.setLanguage(new Locale(word));
-
+                if(selectedLanguage.equals("BM")){
+                    tts.setLanguage(new Locale("ms"));
+                }else {
+                    tts.setLanguage(new Locale(word));
+                }
             }
 
             utteranceProgressListener = new UtteranceProgressListener() {
@@ -454,7 +457,6 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
     public void Download(View v) {
         try {
             Calendar c = Calendar.getInstance();
-            // System.out.println("Current time =&gt; " + c.getTime());
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String formattedDate = df.format(c.getTime());
 
