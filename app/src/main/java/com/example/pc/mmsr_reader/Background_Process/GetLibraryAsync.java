@@ -3,6 +3,7 @@ package com.example.pc.mmsr_reader.Background_Process;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.example.pc.mmsr_reader.Class.Storybook;
 import com.example.pc.mmsr_reader.Adapter.LibraryAdapter;
 import com.example.pc.mmsr_reader.DatabaseHandler;
 import com.example.pc.mmsr_reader.LibraryPopupWindowActivity;
+import com.example.pc.mmsr_reader.R;
 import com.example.pc.mmsr_reader.VolleySingleton;
 
 import org.json.JSONArray;

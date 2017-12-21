@@ -5,17 +5,23 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,13 +38,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pc on 12/11/2017.
  */
 
-public class LibraryPopupWindowActivity extends Activity{
+public class LibraryPopupWindowActivity extends Activity implements TextToSpeech.OnInitListener{
     public static Activity LibraryPopupWindowActivity;
     public static Storybook storybook;
     public static Reader reader;
@@ -70,6 +78,11 @@ public class LibraryPopupWindowActivity extends Activity{
     String language2[];
     int storytotalpagecount;
 
+    private final int CHECK_CODE = 0x1;
+    private TextToSpeech tts;
+    private UtteranceProgressListener utteranceProgressListener;
+    private Button buttonSpeak;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +110,8 @@ public class LibraryPopupWindowActivity extends Activity{
         etContent = findViewById(R.id.etContent);
         spinnerLanguageCode = findViewById(R.id.spnLanguageCode);
         imgvImage = findViewById(R.id.imgvImageInPopUpWindow);
-        //    getSelectedStorybookPages("s00004", "EN");
+
+        checkTTS();
 
         ArrayAdapter<String> adapter;
         list = new ArrayList<String>();
@@ -127,6 +141,45 @@ public class LibraryPopupWindowActivity extends Activity{
                 // your code here
             }
         });
+
+        buttonSpeak = findViewById(R.id.buttonSpeak);
+        buttonSpeak.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                int id = v.getId();
+
+                if(id == R.id.buttonSpeak){
+                    String stringInput;
+
+                    stringInput = etContent.getText().toString();
+
+                    if(tts.isSpeaking()){
+                        Toast.makeText(getApplicationContext(), "System busy. Please try again later.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                        for (String word:stringInput.split(" ")) {
+                            tts.speak(word, TextToSpeech.QUEUE_ADD, null, word);
+                        }
+
+                    }
+                    else {
+                        HashMap<String, String> hash = new HashMap<String,String>();
+                        hash.put(TextToSpeech.Engine.KEY_PARAM_STREAM,
+                                String.valueOf(AudioManager.STREAM_NOTIFICATION));
+                        for (String word:stringInput.split(" ")) {
+                            tts.speak(word, TextToSpeech.QUEUE_ADD, hash);
+                        }
+
+                    }
+                }
+            }
+        });
+
+
 
 
         imgbtnPreviousPage = findViewById(R.id.imgbtnPreviousPage);
@@ -303,6 +356,79 @@ public class LibraryPopupWindowActivity extends Activity{
 
         } catch (JSONException e) {
             Log.e("error", e.getMessage().toString());
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == CHECK_CODE){
+            if(resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS){
+                //success
+                tts = new TextToSpeech(this, this);
+
+            }else {
+                //failed. install voice data
+                Intent install = new Intent();
+                install.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                startActivity(install);
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (tts != null) {
+            tts.stop(); //interrupts the current utterance
+            tts.shutdown(); //releases the resources
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    private void checkTTS(){
+        Intent check = new Intent();
+        check.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+        startActivityForResult(check, CHECK_CODE);
+    }
+
+    @Override
+    public void onInit(int i) {
+        if(i == TextToSpeech.SUCCESS){
+            // Change this to match your
+            // locale
+            tts.setLanguage(Locale.US);
+            utteranceProgressListener = new UtteranceProgressListener() {
+                @Override
+                public void onStart(final String utteranceId) {
+
+                    //Display progress of uttering
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //textViewOutput.append("\n"+ utteranceId);
+                            etContent.setText(utteranceId);
+                        }
+                    });
+                }
+
+                @Override
+                public void onDone(String utteranceId) {
+
+                }
+
+                @Override
+                public void onError(String utteranceId) {
+
+                }
+            };
+            tts.setOnUtteranceProgressListener(utteranceProgressListener);
+
+        }else{
+            Log.e("TTS", "Initialization Failed!");
         }
     }
 }

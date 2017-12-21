@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -81,7 +82,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvContext"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="false" />
 
         <ImageButton
             android:id="@+id/imgbtnPreviousPage"
@@ -114,6 +115,12 @@
             app:layout_constraintLeft_toRightOf="@+id/etContent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvContext" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/speak"
+            android:id="@+id/buttonSpeak"/>
 
         <Button
             android:id="@+id/btnRateMe"

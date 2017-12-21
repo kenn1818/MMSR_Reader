@@ -17,4 +17,8 @@
     <string name="privacy_statement">Privacy Statement</string>
     <string name="update_library">update library</string>
 
+    <string name="get_story_url">http://tarucmmsr.pe.hu/get_storybook_translate_list.php</string>
+    <string name="speak">speak</string>
+
+
 </resources>

@@ -27,8 +27,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       Intent intent = new Intent(this, SplashActivity.class);
-        startActivity(intent);
+//       Intent intent = new Intent(this, SplashActivity.class);
+//        startActivity(intent);
+
  //       Intent intent = new Intent(this, LoginActivity.class);
  //       startActivity(intent);
 
@@ -80,9 +81,6 @@ public class MainActivity extends AppCompatActivity
             manager.beginTransaction().replace(R.id.layout_for_fragment, privacyStatementFragment).commit();
         }else if(id == R.id.action_update){
             //TODO put the update library code
-//            GetLibraryAsync getLibraryAsync = new GetLibraryAsync(this, lvShowStorybook, ageGroupFilter);
-//
-//            getLibraryAsync.execute();
             long counter =0;
             DatabaseHandler mydb = new DatabaseHandler(getApplicationContext());
             counter = mydb.countExistingRecordInStorybookTable();

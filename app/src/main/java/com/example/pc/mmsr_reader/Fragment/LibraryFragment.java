@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,9 +51,11 @@ public class LibraryFragment extends Fragment {
         //If local have no records, proceed to server in order retreive storybooks
         //TODO check storybook size record in server
         int serverStoryCount =0;
-        if(storybooks.size()<serverStoryCount){
+        if(storybooks.size()==0){
             GetLibraryAsync getLibraryAsync = new GetLibraryAsync(this.getContext(), lvShowStorybook, ageGroupFilter);
             getLibraryAsync.execute();
+        }else{
+            Log.d(String.valueOf(storybooks.size()),"No record");
         }
 
         LibraryAdapter libraryAdapter = new LibraryAdapter(this.getContext(),storybooks);

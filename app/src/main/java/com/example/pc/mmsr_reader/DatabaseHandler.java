@@ -203,17 +203,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public long countExistingRecordInStorybookTable(){
-
-        //String query = "SELECT count(*) AS counter FROM " + STORYBOOK_TABLE;
         SQLiteDatabase database = this.getReadableDatabase();
-//        Cursor cursor = database.rawQuery(query, null);
         return DatabaseUtils.queryNumEntries(database,STORYBOOK_TABLE);
-//        cursor.moveToFirst();
-//
-//        while (!cursor.isAfterLast()) {
-//            counter = cursor.getInt(0);
-//            cursor.moveToNext();
-//        }
+
+//String query = "SELECT count(*) AS counter FROM " + STORYBOOK_TABLE;
+//Cursor cursor = database.rawQuery(query, null);
+//cursor.moveToFirst();
+//while (!cursor.isAfterLast()) {
+//  counter = cursor.getInt(0);
+//  cursor.moveToNext();
+//}
     }
 
     boolean addPage(Page page) {
