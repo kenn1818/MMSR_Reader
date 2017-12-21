@@ -74,17 +74,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_STORYBOOK_TABLE = "CREATE TABLE " + STORYBOOK_TABLE + "("
                 + STORYBOOK_STORYBOOKID + " INTEGER PRIMARY KEY,"
-                + STORYBOOK_LANGUAGECODE + " TEXT,"
-                + STORYBOOK_DATEOFCREATION + " TEXT,"
-                + STORYBOOK_READABILITY + " TEXT,"
                 + STORYBOOK_TITLE + " TEXT,"
                 + STORYBOOK_DESC + " TEXT,"
-                + STORYBOOK_TYPE + " TEXT,"
+                + STORYBOOK_LANGUAGECODE + " TEXT,"
                 + STORYBOOK_STATUS + " TEXT,"
-                + STORYBOOK_EMAIL + " TEXT,"
                 + STORYBOOK_AGEGROUPCODE + " TEXT,"
+                + STORYBOOK_DATEOFCREATION + " TEXT,"
+                + STORYBOOK_TYPE + " TEXT,"
+                + STORYBOOK_EMAIL + " TEXT,"
                 + STORYBOOK_COVERPAGE + " BLOB,"
                 + STORYBOOK_RATING + " INTEGER"+ ")";
+
         db.execSQL(CREATE_STORYBOOK_TABLE);
 
         String CREATE_PAGE_TABLE = "CREATE TABLE " + PAGE_TABLE + "("
@@ -126,7 +126,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(STORYBOOK_STORYBOOKID, storybook.getStorybookID());
         values.put(STORYBOOK_LANGUAGECODE, storybook.getLanguage());
         values.put(STORYBOOK_DATEOFCREATION, storybook.getDateOfCreation());
-        values.put(STORYBOOK_READABILITY, storybook.getReadability());
         values.put(STORYBOOK_TITLE, storybook.getTitle());
         values.put(STORYBOOK_DESC, storybook.getDesc());
         values.put(STORYBOOK_TYPE, storybook.getType());
@@ -256,17 +255,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getReadableDatabase();
         String[] allColumn = {
                 STORYBOOK_STORYBOOKID,
-                STORYBOOK_LANGUAGECODE,
-                STORYBOOK_DATEOFCREATION,
-                STORYBOOK_READABILITY,
                 STORYBOOK_TITLE,
                 STORYBOOK_DESC,
-                STORYBOOK_TYPE,
+                STORYBOOK_LANGUAGECODE,
                 STORYBOOK_STATUS,
-                STORYBOOK_EMAIL,
                 STORYBOOK_AGEGROUPCODE,
+                STORYBOOK_DATEOFCREATION,
+                STORYBOOK_TYPE,
+                STORYBOOK_EMAIL,
                 STORYBOOK_COVERPAGE,
-                STORYBOOK_RATING
+                STORYBOOK_RATING,
         };
         Cursor cursor = database.query(STORYBOOK_TABLE, allColumn, null, null, null, null, null);
 
@@ -275,18 +273,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         while (!cursor.isAfterLast()) {
             Storybook storybook = new Storybook();
             storybook.setStorybookID(cursor.getString(0));
-            storybook.setLanguage(cursor.getString(1));
-            storybook.setDateOfCreation(cursor.getString(2));
-            storybook.setReadability(cursor.getString(3));
-            storybook.setTitle(cursor.getString(4));
-            Log.e("Data", cursor.getString(4));
-            storybook.setDesc(cursor.getString(5));
-            storybook.setType(cursor.getString(6));
-            storybook.setStatus(cursor.getString(7));
+            storybook.setTitle(cursor.getString(1));
+            storybook.setDesc(cursor.getString(2));
+            storybook.setLanguage(cursor.getString(3));
+            storybook.setStatus(cursor.getString(4));
+            storybook.setAgeGroup(cursor.getString(5));
+            storybook.setDateOfCreation(cursor.getString(6));
+            storybook.setType(cursor.getString(7));
             storybook.setEmail(cursor.getString(8));
-            storybook.setAgeGroup(cursor.getString(9));
-            storybook.setCoverPage(cursor.getBlob(10));
-            storybook.setRating(cursor.getString(11));
+            storybook.setCoverPage(cursor.getBlob(9));
+            storybook.setRating(cursor.getString(10));
+
             storybooks.add(storybook);
             cursor.moveToNext();
         }
@@ -296,7 +293,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void updateLocalDB(ArrayList<Storybook>storybooks){
         //TODO: insert storybooks to local DB
         if(storybooks.size() > 0){
-            //SQLiteDatabase database = this.getWritableDatabase();
+            SQLiteDatabase database = this.getWritableDatabase();
             for (Storybook s : storybooks
                     ) {
                 //Insert Stroybook to DB
@@ -316,12 +313,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 values.put(STORYBOOK_RATING, s.getRate());
 
                 //Insert a row
-                boolean b = addStorybook(s);
-                //database.insert(STORYBOOK_TABLE, null, values);
+                //boolean b = addStorybook(s);
+                database.insert(STORYBOOK_TABLE, null, values);
 
             }
             //Close database connection
-           // database.close();
+           database.close();
         }
     }
 
