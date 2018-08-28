@@ -1,7 +1,10 @@
 package com.example.pc.mmsr_reader.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,10 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.example.pc.mmsr_reader.Background_Process.GetLibraryAsync;
-import com.example.pc.mmsr_reader.DatabaseHandler;
 import com.example.pc.mmsr_reader.Fragment.AboutUsFragment;
 import com.example.pc.mmsr_reader.Fragment.LibraryFragment;
 import com.example.pc.mmsr_reader.Fragment.MyStorybookFragment;
@@ -22,33 +22,33 @@ import com.example.pc.mmsr_reader.Fragment.ProfileFragment;
 import com.example.pc.mmsr_reader.PermissionVerify;
 import com.example.pc.mmsr_reader.R;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-       Intent intent = new Intent(this, SplashActivity.class);
-        startActivity(intent);
-
- //       Intent intent = new Intent(this, LoginActivity.class);
- //       startActivity(intent);
-
-        PermissionVerify.verifyStoragePermissions(this);
-
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String status = sharedPreferences.getString("LoginStatus", "LogOut");
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+//        Intent intent = new Intent(this, SplashActivity.class);
+//        startActivity(intent);
+        if (status.equals("LogOut")) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+        } else {
+            setContentView(R.layout.activity_main);
+            PermissionVerify.verifyStoragePermissions(this);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+        }
     }
 
     @Override
@@ -102,12 +102,11 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-//        if (id == R.id.nav_activity_profile){
-//            ProfileFragment profileFragment = new ProfileFragment();
-//            android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
-//            manager.beginTransaction().replace(R.id.layout_for_fragment, profileFragment).commit();
-//        }else
-            if (id == R.id.nav_about_us) {
+        if (id == R.id.nav_activity_profile) {
+            ProfileFragment profileFragment = new ProfileFragment();
+            android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.layout_for_fragment, profileFragment).commit();
+        } else if (id == R.id.nav_about_us) {
             AboutUsFragment aboutUsFragment = new AboutUsFragment();
             android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.layout_for_fragment, aboutUsFragment).commit();
@@ -115,14 +114,19 @@ public class MainActivity extends AppCompatActivity
             LibraryFragment libraryFragment = new LibraryFragment();
             android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.layout_for_fragment, libraryFragment).commit();
+        } else if (id == R.id.nav_my_story_books) {
+            MyStorybookFragment myStorybookFragment = new MyStorybookFragment();
+            android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.layout_for_fragment, myStorybookFragment).commit();
+        } else if (id == R.id.nav_logout) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("LoginStatus", "LogOut");
+            editor.apply();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+
         }
-//        else if (id == R.id.nav_my_story_books) {
-//            MyStorybookFragment myStorybookFragment = new MyStorybookFragment();
-//            android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
-//            manager.beginTransaction().replace(R.id.layout_for_fragment, myStorybookFragment).commit();
-//        } else if (id == R.id.nav_logout) {
-//
-//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

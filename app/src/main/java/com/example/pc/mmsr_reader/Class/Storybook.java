@@ -8,21 +8,27 @@ import java.util.ArrayList;
 
 public class Storybook {
     public String storybookID;
-    public String language;
-    public String dateOfCreation;
-    public String readability;
     public String title;
     public String desc;
-    public String type;
+    public String language;
     public String status;
-    public String email;
     public String ageGroup;
-
-    public byte[]  coverPage;
+    public String dateOfCreation;
+    public String type;
+    public String email;
+    public byte[] coverPage;
+    public String rate;
+    public String authorName;
     public int totalWords;
     public int totalPages;
-    public String rate;
 
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
 
     private ArrayList<Page> page = new ArrayList<Page>();
     private int lastPageNo = 0;
@@ -31,13 +37,14 @@ public class Storybook {
     public Storybook() {
     }
 
-    public byte[]  getCoverPage() {
+    public byte[] getCoverPage() {
         return coverPage;
     }
 
-    public void setCoverPage(byte[]  coverPage) {
+    public void setCoverPage(byte[] coverPage) {
         this.coverPage = coverPage;
     }
+
     public Storybook(String storybookID, String title, String desc, String language, String ageGroup, String dateOfCreation, String email, byte[] coverPage, String rate) {
         this.storybookID = storybookID;
         this.title = title;
@@ -50,7 +57,7 @@ public class Storybook {
         this.rate = rate;
     }
 
-    public Storybook(String storybookID, String title, String desc, String language, String status, String ageGroup, String dateOfCreation, String type, String email, byte[]  coverPage, String rate) {
+    public Storybook(String storybookID, String title, String desc, String language, String status, String ageGroup, String dateOfCreation, String type, String email, byte[] coverPage, String rate) {
         this.storybookID = storybookID;
         this.title = title;
         this.desc = desc;
@@ -183,13 +190,5 @@ public class Storybook {
     public void deletePage(int pageNo) {
         page.remove(pageNo);
         lastPageNo--;
-    }
-
-    public String getReadability() {
-        return readability;
-    }
-
-    public void setReadability(String readability) {
-        this.readability = readability;
     }
 }

@@ -21,37 +21,69 @@
         android:layout_marginTop="10dp"
         android:src="@mipmap/ic_mmsr_reader"/>
 
-
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/etUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
+        android:inputType="text"
         android:background="@drawable/edittext_login_form"
         android:hint="Name"/>
 
     <EditText
-        android:id="@+id/dob"
+        android:id="@+id/etDOB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="8dp"
+        android:inputType="text"
         android:background="@drawable/edittext_login_form"
-        android:hint="Date Of Birth"
-        android:ems="10"
-        android:inputType="date" />
+        android:hint="Date Of Birth"/>
+
+    <EditText
+        android:id="@+id/etLoginID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/edittext_login_form"
+        android:inputType="textEmailAddress"
+        android:hint="Email"/>
+
+    <EditText
+        android:id="@+id/etLoginPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/edittext_login_form"
+        android:inputType="textPassword"
+        android:hint="Password"/>
+
+    <EditText
+        android:id="@+id/etConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/edittext_login_form"
+        android:inputType="textPassword"
+        android:hint="Confirm Password"/>
 
     <Button
         android:id="@+id/btn_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:background="@color/colorPrimaryDark"
         android:onClick="SignUp"
-        android:text="SignUp"
+        android:text="Register"
         android:textColor="@android:color/white" />
 
     <!--<TextView-->

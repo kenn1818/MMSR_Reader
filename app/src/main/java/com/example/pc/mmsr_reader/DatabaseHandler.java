@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
     static ArrayList<Storybook> storybooks;
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 11;
 
     // Database Name
     private static final String DATABASE_NAME = "mmsr.db";
@@ -36,7 +36,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String STORYBOOK_STORYBOOKID = "storybookID";
     private static final String STORYBOOK_LANGUAGECODE = "languageCode";
     private static final String STORYBOOK_DATEOFCREATION = "dateOfCreation";
-    private static final String STORYBOOK_READABILITY = "readability";
+ //   private static final String STORYBOOK_READABILITY = "readability";
     private static final String STORYBOOK_TITLE = "title";
     private static final String STORYBOOK_DESC = "description";
     private static final String STORYBOOK_TYPE = "type";
@@ -52,6 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String PAGE_MEDIA = "Media";
     private static final String PAGE_CONTENT = "content";
     private static final String PAGE_WORDCOUNT = "WordCount";
+    private static final String PAGE_STORYBOOKID = "storybookID";
 
     // Reader Table Columns names
     private static final String READER_NAME = "userName";
@@ -73,7 +74,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_STORYBOOK_TABLE = "CREATE TABLE " + STORYBOOK_TABLE + "("
-                + STORYBOOK_STORYBOOKID + " INTEGER PRIMARY KEY,"
+                + STORYBOOK_STORYBOOKID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + STORYBOOK_TITLE + " TEXT,"
                 + STORYBOOK_DESC + " TEXT,"
                 + STORYBOOK_LANGUAGECODE + " TEXT,"
@@ -83,7 +84,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + STORYBOOK_TYPE + " TEXT,"
                 + STORYBOOK_EMAIL + " TEXT,"
                 + STORYBOOK_COVERPAGE + " BLOB,"
-                + STORYBOOK_RATING + " INTEGER"+ ")";
+                + STORYBOOK_RATING + " TEXT"+ ")";
 
         db.execSQL(CREATE_STORYBOOK_TABLE);
 
@@ -93,7 +94,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + PAGE_PAGENO + " INTEGER,"
                 + PAGE_MEDIA + " BLOB,"
                 + PAGE_CONTENT + " TEXT,"
-                + PAGE_WORDCOUNT + " INTEGER" + ")";
+                + PAGE_WORDCOUNT + " INTEGER,"
+                + PAGE_STORYBOOKID + " TEXT" + ")";
         db.execSQL(CREATE_PAGE_TABLE);
 
         String CREATE_READER_TABLE = "CREATE TABLE " + READER_TABLE + "("
@@ -123,15 +125,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     boolean addStorybook(Storybook storybook) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(STORYBOOK_STORYBOOKID, storybook.getStorybookID());
-        values.put(STORYBOOK_LANGUAGECODE, storybook.getLanguage());
-        values.put(STORYBOOK_DATEOFCREATION, storybook.getDateOfCreation());
+//        values.put(STORYBOOK_STORYBOOKID, storybook.getStorybookID());
         values.put(STORYBOOK_TITLE, storybook.getTitle());
         values.put(STORYBOOK_DESC, storybook.getDesc());
-        values.put(STORYBOOK_TYPE, storybook.getType());
+        values.put(STORYBOOK_LANGUAGECODE, storybook.getLanguage());
         values.put(STORYBOOK_STATUS, storybook.getStatus());
-        values.put(STORYBOOK_EMAIL, storybook.getEmail());
         values.put(STORYBOOK_AGEGROUPCODE, storybook.getAgeGroup());
+        values.put(STORYBOOK_DATEOFCREATION, storybook.getDateOfCreation());
+        values.put(STORYBOOK_TYPE, storybook.getType());
+        values.put(STORYBOOK_EMAIL, storybook.getEmail());
         values.put(STORYBOOK_COVERPAGE, storybook.getCoverPage());
         values.put(STORYBOOK_RATING, storybook.getRate());
 
@@ -197,7 +199,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             reader.setUserName(cursor.getString(0));
             reader.setEmail(cursor.getString(1));
             reader.setUserDOB(cursor.getString(2));
-            reader.setPoints(cursor.getInt(3));
+            reader.setPoints(cursor.getString(3));
             cursor.moveToNext();
         }
         return reader;
@@ -238,6 +240,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(PAGE_MEDIA, page.getMedia());
         values.put(PAGE_CONTENT, page.getContent());
         values.put(PAGE_WORDCOUNT, page.getWordCount());
+        values.put(PAGE_STORYBOOKID, page.getStorybookID());
         // Inserting Row
         long result = db.insert(PAGE_TABLE, null, values);
         // db.close(); // Closing database connection
@@ -247,6 +250,49 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             return true;
         }
 
+    }
+
+    public Storybook getSelectedStorybookWithStorybookID(String StorybookID) {
+        Storybook storybook = new Storybook();
+        String query = "SELECT * from storybook where storybookID = '" + StorybookID + "'";
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            storybook.setStorybookID(cursor.getString(0));
+            storybook.setTitle(cursor.getString(1));
+            storybook.setDesc(cursor.getString(2));
+            storybook.setLanguage(cursor.getString(3));
+            storybook.setStatus(cursor.getString(4));
+            storybook.setAgeGroup(cursor.getString(5));
+            storybook.setDateOfCreation(cursor.getString(6));
+            storybook.setType(cursor.getString(7));
+            storybook.setEmail(cursor.getString(8));
+            storybook.setCoverPage(cursor.getBlob(9));
+            storybook.setRating(cursor.getString(10));
+            cursor.moveToNext();
+        }
+        return storybook;
+    }
+
+    public ArrayList<Page> getSelectedStorybookPages(String StorybookID) {
+        ArrayList<Page> pages = new ArrayList<Page>();
+        String query = "SELECT * from page where storybookID = '" + StorybookID + "' order by pageNo asc";
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Page page = new Page();
+            page.setLanguageCode(cursor.getString(1));
+            page.setPageNo(Integer.parseInt(cursor.getString(2)));
+            page.setMedia(cursor.getBlob(3));
+            page.setContent(cursor.getString(4));
+            page.setWordCount(Integer.parseInt(cursor.getString(5)));
+            page.setStorybookID(cursor.getString(6));
+            pages.add(page);
+            cursor.moveToNext();
+        }
+        return pages;
     }
 
     public ArrayList<Storybook> getAllStorybook() {
@@ -290,6 +336,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return storybooks;
     }
 
+
+
     public void updateLocalDB(ArrayList<Storybook>storybooks){
         //TODO: insert storybooks to local DB
         if(storybooks.size() > 0){
@@ -302,7 +350,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 values.put(STORYBOOK_STORYBOOKID, s.getStorybookID());
                 values.put(STORYBOOK_LANGUAGECODE, s.getLanguage());
                 values.put(STORYBOOK_DATEOFCREATION, s.getDateOfCreation());
-                values.put(STORYBOOK_READABILITY, s.getReadability());
                 values.put(STORYBOOK_TITLE, s.getTitle());
                 values.put(STORYBOOK_DESC, s.getDesc());
                 values.put(STORYBOOK_TYPE, s.getType());

@@ -150,18 +150,19 @@ public class GetLibraryAsync extends AsyncTask<Void, Void, Void> {
                     intent.putExtra("DESCRIPTION", storybooks.get(i).getDesc());
                     intent.putExtra("PUBLISHDATE", storybooks.get(i).getDateOfCreation());
                     intent.putExtra("AGEGROUPCODE", storybooks.get(i).getAgeGroup());
+                    intent.putExtra("RATING", storybooks.get(i).getRate());
                     context.startActivity(intent);
                 }
             });
 
-            if(storybooks.size()>0){
-                //TODO in order update local DB, must clear the local DB storage
-                mydb.deleteExistingRecordInStorybookTable();
-                mydb.updateLocalDB(storybooks);
-            }else{
-                //Display no storybook
-                Toast.makeText(context,"No Storybooks",Toast.LENGTH_SHORT).show();
-            }
+//            if(storybooks.size()>0){
+//                //TODO in order update local DB, must clear the local DB storage
+//                mydb.deleteExistingRecordInStorybookTable();
+//                mydb.updateLocalDB(storybooks);
+//            }else{
+//                //Display no storybook
+//                Toast.makeText(context,"No Storybooks",Toast.LENGTH_SHORT).show();
+//            }
             //final DatabaseHandler mydb = new DatabaseHandler(context);
 
 

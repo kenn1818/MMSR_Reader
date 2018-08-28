@@ -2,8 +2,11 @@
 <resources>
     <color name="colorPrimary">#78909C</color>
     <color name="colorPrimaryDark">#546E7A</color>
+    <color name="colorDark">#426482</color>
     <color name="colorAccent">#03A9F4</color>
     <color name="black">#000000</color>
     <color name="lightblue">#8a527da3</color>
     <color name="bg_splash">#adf0f4</color>
+    <color name="colorNavAvatar">#5085B1</color>
+    <color name="yellow">#FFFF00</color>
 </resources>

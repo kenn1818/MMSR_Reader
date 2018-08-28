@@ -21,7 +21,9 @@
 
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></android.support.v7.widget.Toolbar>
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.Toolbar>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,6 +41,7 @@
                     app:civ_border_width="4dp" />
 
                 <TextView
+                    android:id="@+id/tvUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -48,6 +51,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvDob"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="This is my profile"
@@ -68,7 +72,7 @@
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:columnCount="2"
+                android:columnCount="3"
                 android:padding="16dp"
                 android:rowCount="2">
 
@@ -82,12 +86,23 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvPoints"
                     android:layout_gravity="center"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:text="1000"
                     android:textColor="@android:color/white"
                     android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnHelp"
+                    android:layout_height="20dp"
+                    android:layout_width="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/help_small"
+                    />
             </GridLayout>
 
         </LinearLayout>
@@ -95,15 +110,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:weightSum="1">
 
             <RatingBar
                 android:id="@+id/ratingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="30dp"
+                android:progressTint="@color/yellow"
+                android:isIndicator="true"
+                android:layout_weight="0.9" />
+
+            <Button
+                android:id="@+id/btnHelpStar"
+                android:layout_height="20dp"
+                android:layout_width="20dp"
+                android:layout_marginLeft="30dp"
                 android:layout_gravity="center"
-                android:isIndicator="true" />
+                android:background="@drawable/help_small"
+                />
         </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>

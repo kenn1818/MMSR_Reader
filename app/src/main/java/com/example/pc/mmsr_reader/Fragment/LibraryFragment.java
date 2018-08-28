@@ -45,18 +45,19 @@ public class LibraryFragment extends Fragment {
         //mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
 
         //MainActivity mainActivity = (MainActivity) getActivity();
-        DatabaseHandler mydb = new DatabaseHandler(getContext());
-        storybooks = mydb.getAllStorybook();
+//        DatabaseHandler mydb = new DatabaseHandler(getContext());
+//        storybooks = mydb.getAllStorybook();
 
         //If local have no records, proceed to server in order retreive storybooks
         //TODO check storybook size record in server
-        int serverStoryCount =0;
-        if(storybooks.size()==0){
+//        int serverStoryCount =0;
+//        if(storybooks.size()==0){
             GetLibraryAsync getLibraryAsync = new GetLibraryAsync(this.getContext(), lvShowStorybook, ageGroupFilter);
             getLibraryAsync.execute();
-        }else{
-            Log.d(String.valueOf(storybooks.size()),"No record");
-        }
+            //mydb.updateLocalDB(storybooks);
+//        }else{
+//            Log.d(String.valueOf(storybooks.size()),"No record");
+//        }
 
         LibraryAdapter libraryAdapter = new LibraryAdapter(this.getContext(),storybooks);
         lvShowStorybook.setAdapter(libraryAdapter);

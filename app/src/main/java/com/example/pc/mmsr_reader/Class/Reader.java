@@ -10,13 +10,13 @@ public class Reader {
     public String password;
     public String userDOB;
     public String email;
-    public int points;
+    public String points;
 
     public Reader(){
 
     }
 
-    public Reader(String userID, String userName, String password, String userDOB, String email, int points) {
+    public Reader(String userID, String userName, String password, String userDOB, String email, String points) {
         this.userID = userID;
         this.userName = userName;
         this.password = password;
@@ -65,11 +65,11 @@ public class Reader {
         this.email = email;
     }
 
-    public int getPoints() {
+    public String getPoints() {
         return points;
     }
 
-    public void setPoints(int points) {
+    public void setPoints(String points) {
         this.points = points;
     }
 }

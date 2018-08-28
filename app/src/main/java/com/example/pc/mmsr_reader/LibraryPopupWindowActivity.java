@@ -31,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.pc.mmsr_reader.Activity.RatingActivity;
 import com.example.pc.mmsr_reader.Class.Language;
 import com.example.pc.mmsr_reader.Class.Page;
 import com.example.pc.mmsr_reader.Class.Reader;
@@ -72,6 +73,7 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
     public String email;
     public String agegroupcode;
     public String lastBookNum;
+    public String rating;
 
     DatabaseHandler myDb;
     List<String> list;
@@ -90,6 +92,7 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
 
     private Button buttonSpeak;
     private Button buttonDownload;
+    private Button buttonRate;
 
 
     @Override
@@ -111,10 +114,10 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
         storybookID = (String) b.get("STORYBOOKID");
         title = (String) b.get("TITLE");
         languageCode = (String) b.get("LANGUAGECODE");
-        description = (String) b.get("DESCRIPTION");
         publishdate = (String) b.get("PUBLISHDATE");
         email = (String) b.get("EMAIL");
         agegroupcode = (String) b.get("AGEGROUPCODE");
+        rating = (String) b.get("RATING");
 
         etContent = findViewById(R.id.etContent);
         spinnerLanguageCode = findViewById(R.id.spnLanguageCode);
@@ -126,7 +129,14 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
         list = new ArrayList<String>();
         String[] AvailableLanguage = languageCode.split(" ");
         for (int i = 0; i < AvailableLanguage.length; i++) {
-            list.add(AvailableLanguage[i]);
+            if(AvailableLanguage[i].equals("EN")){
+                list.add("English");
+            }else if(AvailableLanguage[i].equals("BM")){
+                list.add("Malay");
+            }else if(AvailableLanguage[i].equals("ZH")){
+                list.add("Chinese");
+            }
+
         }
 
         adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
@@ -136,13 +146,18 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedLanguage = spinnerLanguageCode.getSelectedItem().toString();
-                progressDialog.setMessage("Getting storybook content...");
+                if(selectedLanguage.equals("English")){
+                    selectedLanguage = "EN";
+                }else if(selectedLanguage.equals("Malay")){
+                    selectedLanguage = "BM";
+                }else if(selectedLanguage.equals("Chinese")){
+                    selectedLanguage = "ZH";
+                }
+                progressDialog.setMessage("Loading storybook content...");
                 progressDialog.show();
 
                 getSelectedStorybookPages(storybookID, selectedLanguage);
                 getLanguage(selectedLanguage);
-
-
             }
 
             @Override
@@ -152,6 +167,7 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
         });
 
         buttonDownload = findViewById(R.id.btnDownload);
+        buttonRate = findViewById(R.id.btnRateMe);
 
         buttonSpeak = findViewById(R.id.buttonSpeak);
         buttonSpeak.setOnClickListener(new View.OnClickListener() {
@@ -240,6 +256,18 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
             }
         });
 
+    }
+
+    public void Rating(View v){
+        Intent intent = new Intent(LibraryPopupWindowActivity.this, RatingActivity.class);
+        intent.putExtra("STORYBOOKID", storybookID);
+        intent.putExtra("TITLE", title);
+        intent.putExtra("LANGUAGECODE", languageCode);
+        intent.putExtra("DESCRIPTION", description);
+        intent.putExtra("PUBLISHDATE", publishdate);
+        intent.putExtra("EMAIL", email);
+        intent.putExtra("AGEGROUPCODE", agegroupcode);
+        startActivity(intent);
     }
 
     private void getLanguage(String selectedLanguage) {
@@ -456,21 +484,24 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
     //TODO Download
     public void Download(View v) {
         try {
+
+
             Calendar c = Calendar.getInstance();
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String formattedDate = df.format(c.getTime());
 
             storybook.setStorybookID(storybookID);
             storybook.setTitle(title);
-            storybook.setDesc(description);
-            storybook.setType("Reading");
-            ;
-            storybook.setReadability("null");
-            storybook.setDateOfCreation(formattedDate);
-            storybook.setAgeGroup(agegroupcode);
-            storybook.setEmail(email);
-            storybook.setCoverPage(storybook.getPage(0).getMedia());
+            storybook.setDesc(storybook.getPage(0).getContent());
+            storybook.setLanguage(selectedLanguage);
             storybook.setStatus("for reading only");
+            storybook.setAgeGroup(agegroupcode);
+            storybook.setDateOfCreation(formattedDate);
+            storybook.setType("Reading");
+            storybook.setAuthorName(email);
+            storybook.setCoverPage(storybook.getPage(0).getMedia());
+            storybook.setRating(rating);
+
             boolean success = myDb.addStorybook(storybook);
             if (success = true) {
                 for (int i = 0; i < storytotalpagecount; i++) {
@@ -481,6 +512,8 @@ public class LibraryPopupWindowActivity extends Activity implements TextToSpeech
                     pagewritten.setMedia(storybook.getPage(i).getMedia());
                     pagewritten.setWordCount(storybook.getPage(i).getWordCount());
                     pagewritten.setContent(storybook.getPage(i).getContent());
+                    storybook.getPage(i).setStorybookID(myDb.getLastStorybookID() + "");
+                    pagewritten.setStorybookID(storybook.getPage(i).getStorybookID());
 //                            storybookPage.get(i).setStorybookID(myDb.getLastStorybookID() + "");
 //                            lastBookNum = storybookPage.get(i).getStorybookID();
 //                            pagewritten.setStorybookID(storybookPage.get(i).getStorybookID());
